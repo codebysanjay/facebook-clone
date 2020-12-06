@@ -1,3 +1,5 @@
+/* Header Section */
+
 .header {
 	display: flex;
 	padding: 15px 20px;
@@ -33,6 +35,9 @@
 	border: none;
 	background-color: transparent;
 	outline-width: 0;
+}
+.header__input > .MuiSvgIcon-root {
+	color: grey;
 }
 .header__center {
 	display: flex;
