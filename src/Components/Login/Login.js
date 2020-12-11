@@ -1,20 +1,23 @@
 /* eslint-disable no-unused-vars */
 import { Button } from "@material-ui/core";
-import React, { useState } from "react";
+import React from "react";
+import { actionTypes } from "../../reducer";
+import { useStateValue } from "../../StateProvider";
 import { auth, provider } from "./../../firebase";
 import "./Login.css";
 
 function Login() {
-	const [named,setName]=useState('');
+	const [state, dispatch] = useStateValue();
 	const signIn = () => {
 		auth
 			.signInWithPopup(provider)
 			.then((result) => {
-                console.log(result);
-                setName(result);
+				dispatch({
+					type: actionTypes.SET_USER,
+					user: result.user,
+				});
 			})
-            .catch((e) => alert(e));
-            console.log(named.additionalUserInfo.profile.name);
+			.catch((e) => alert(e));
 	};
 	return (
 		<div className="login">
