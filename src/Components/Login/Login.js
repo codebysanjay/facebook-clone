@@ -16,6 +16,7 @@ function Login() {
 					type: actionTypes.SET_USER,
 					user: result.user,
 				});
+				console.log(result);
 			})
 			.catch((e) => alert(e));
 	};

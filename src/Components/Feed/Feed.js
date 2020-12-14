@@ -1,43 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Feed.css";
 import MessageSender from "./MessageSender/MessageSender";
 import Post from "./Post/Post";
 import StoryReel from "./StoryReel/StoryReel";
+import db from "./../../firebase";
 
 function Feed() {
+	const [posts, setPosts] = useState([]);
+
+	useEffect(() => {
+		db.collection("posts").onSnapshot((snapshot) => {
+			setPosts(
+				snapshot.docs.map((doc) => ({
+					id: doc.id,
+					data: doc.data(),
+				}))
+			);
+		});
+	}, []);
+
 	return (
 		<div className="feed">
 			<StoryReel />
 			<MessageSender />
-
-			<Post
-				timestamp="Yup this is timestamp"
-				profilePic="https://www.indiantelevision.com/sites/default/files/styles/smartcrop_800x800/public/images/tv-images/2019/05/30/sachin.jpg?itok=ico_A-Oe"
-				message="This Worked"
-				username="Sachin Tendulkar"
-				image="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
-			/>
-			<Post
-				timestamp="Yup this is timestamp"
-				profilePic="https://www.indiantelevision.com/sites/default/files/styles/smartcrop_800x800/public/images/tv-images/2019/05/30/sachin.jpg?itok=ico_A-Oe"
-				message="This Worked"
-				username="Sachin Tendulkar"
-				image="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
-			/>
-			<Post
-				timestamp="Yup this is timestamp"
-				profilePic="https://www.indiantelevision.com/sites/default/files/styles/smartcrop_800x800/public/images/tv-images/2019/05/30/sachin.jpg?itok=ico_A-Oe"
-				message="This Worked"
-				username="Sachin Tendulkar"
-				image="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
-			/>
-			<Post
-				timestamp="Yup this is timestamp"
-				profilePic="https://www.indiantelevision.com/sites/default/files/styles/smartcrop_800x800/public/images/tv-images/2019/05/30/sachin.jpg?itok=ico_A-Oe"
-				message="This Worked"
-				username="Sachin Tendulkar"
-				image="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
-			/>
+			{posts.map((post)=>(
+			<Post 
+				key={post.data.id}
+				profilePic={post.data.profilePic}
+				message={post.data.message}
+				timestamp={post.data.timestamp}
+				username={post.data.username}
+				image={post.data.Image}
+			/>))}
+			
+			
 		</div>
 	);
 }

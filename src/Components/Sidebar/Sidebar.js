@@ -1,11 +1,13 @@
 import { Chat, EmojiFlags, ExpandMoreOutlined, LocalHospital, People, Storefront, VideoLibrary } from "@material-ui/icons";
 import React from "react";
+import { useStateValue } from "../../StateProvider";
 import './sidebar.css'
 import SidebarRow from "./SidebarRow/SidebarRow";
 
 function Sidebar() {
+    const [{user},dispatch]=useStateValue();
 	return <div className="sidebar">
-        <SidebarRow src='https://www.indiantelevision.com/sites/default/files/styles/smartcrop_800x800/public/images/tv-images/2019/05/30/sachin.jpg?itok=ico_A-Oe' title='Sachin Tendulkar' />
+        <SidebarRow src={user.photoURL} title={user.displayName} />
         <SidebarRow Icon={LocalHospital} title='COVID-19 Information Center'/>
         <SidebarRow Icon={EmojiFlags} title='Pages'/>
         <SidebarRow Icon={People} title='Friends'/>
